@@ -1,0 +1,25 @@
+# Root .gitignore for Smart Legal Assistant Portal
+
+# OS & IDE Files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.log
+
+# Backend Build & Config
+backend/target/
+backend/*.log
+backend/.env
+backend/.env.local
+backend/out/
+
+# Frontend Build & Config
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.production.local
