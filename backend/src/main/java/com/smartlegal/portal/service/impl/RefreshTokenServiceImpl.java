@@ -39,8 +39,12 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
 
-        // Delete any existing refresh token for this user to prevent unique constraint violation
-        refreshTokenRepository.deleteByUser(user);
+        // Delete any existing refresh token for this user immediately
+        refreshTokenRepository.findAll().stream()
+                .filter(t -> t.getUser() != null && t.getUser().getId().equals(userId))
+                .forEach(t -> {
+                    refreshTokenRepository.delete(t);
+                });
         refreshTokenRepository.flush();
 
         RefreshToken refreshToken = new RefreshToken();
