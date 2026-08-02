@@ -1,0 +1,67 @@
+#!/bin/sh
+# ----------------------------------------------------------------------------
+# Maven Start Up Batch script
+# ----------------------------------------------------------------------------
+
+# OS specific support.  $var _must_ be set to true or false.
+cygwin=false;
+darwin=false;
+mingw=false
+case "`uname`" in
+  CYGWIN*) cygwin=true ;;
+  DARWIN*) darwin=true ;;
+  MINGW*) mingw=true ;;
+esac
+
+## Find the user's home directory
+if [ -z "$HOME" ] ; then
+  HOME="$HOME"
+fi
+
+## Resolve links - $0 may be a softlink
+PRG="$0"
+
+while [ -h "$PRG" ] ; do
+  ls=`ls -ld "$PRG"`
+  link=`expr "$ls" : '.*-> \(.*\)$'`
+  if expr "$link" : '/.*' > /dev/null; then
+    PRG="$link"
+  else
+    PRG=`dirname "$PRG"`/"$link"
+  fi
+done
+
+PRGDIR=`dirname "$PRG"`
+BASE_DIR=`cd "$PRGDIR" >/dev/null; pwd`
+
+# Reset imports
+JAVACMD=""
+
+# Determine JAVA_HOME
+if [ -n "$JAVA_HOME" ] ; then
+  if [ -x "$JAVA_HOME/jre/bin/java" ] ; then
+    JAVACMD="$JAVA_HOME/jre/bin/java"
+  elif [ -x "$JAVA_HOME/bin/java" ] ; then
+    JAVACMD="$JAVA_HOME/bin/java"
+  fi
+else
+  JAVACMD=`which java`
+fi
+
+if [ ! -x "$JAVACMD" ] ; then
+  echo "Error: JAVA_HOME is not defined correctly." >&2
+  exit 1
+fi
+
+WRAPPER_JAR="$BASE_DIR/.mvn/wrapper/maven-wrapper.jar"
+
+if [ ! -f "$WRAPPER_JAR" ] ; then
+  echo "Error: Could not find $WRAPPER_JAR" >&2
+  exit 1
+fi
+
+exec "$JAVACMD" \
+  -classpath "$WRAPPER_JAR" \
+  "-Dmaven.multiModuleProjectDirectory=$BASE_DIR" \
+  org.apache.maven.wrapper.MavenWrapperMain \
+  "$@"
